@@ -1,0 +1,1 @@
+Coloque aqui entrevistas, diagramas (DER, classes, casos de uso) e o plano de testes.

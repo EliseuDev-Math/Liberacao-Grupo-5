@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Horário de aula')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main>
+  <h1 th:text="${horario.id == null} ? 'Novo(a) horário de aula' : 'Editar horário de aula'"></h1>
+  <form class="card" th:action="@{/horarios/salvar}" th:object="${horario}" method="post">
+    <input type="hidden" th:field="*{id}" th:if="*{id != null}">
+    <div class="erro" th:if="${#fields.hasErrors('*')}"><p th:each="e : ${#fields.errors('*')}" th:text="${e}"></p></div>
+    <label>Turma</label>
+    <select th:field="*{turmaId}"><option value="">Selecione</option><option th:each="o : ${turmas}" th:value="${o.id}" th:text="${o.nome + ' — ' + o.curso.nome}"></option></select>
+    <label>Dia da semana</label>
+    <select th:field="*{diaSemana}"><option value="">Selecione</option><option th:each="o : ${dias}" th:value="${o}" th:text="${o.descricao}"></option></select>
+    <label>Início</label>
+    <input type="time" th:field="*{horaInicio}" >
+    <label>Fim</label>
+    <input type="time" th:field="*{horaFim}" >
+    <label>Disciplina</label>
+    <input type="text" th:field="*{disciplina}" >
+    <label>Professor(a)</label>
+    <input type="text" th:field="*{professor}" >
+    <div class="botoes"><button type="submit">Salvar</button><a th:href="@{/horarios}">Cancelar</a></div>
+  </form>
+</main>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Liberação')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main>
+  <div class="cabecalho">
+    <h1>Autorização de saída nº <span th:text="${liberacao.id}"></span></h1>
+    <span class="badge" th:classappend="${liberacao.status.name() == 'AUTORIZADA'} ? 'ok' : 'cancelada'" th:text="${liberacao.status.descricao}"></span>
+  </div>
+  <div class="card detalhe">
+    <dl>
+      <dt>Tipo</dt><dd th:text="${liberacao.tipo.descricao}"></dd>
+      <dt>Turma</dt><dd th:text="${liberacao.turma.nome + ' — ' + liberacao.turma.curso.nome}"></dd>
+      <dt th:if="${liberacao.aluno != null}">Aluno</dt>
+      <dd th:if="${liberacao.aluno != null}" th:text="${liberacao.aluno.nome + ' (mat. ' + liberacao.aluno.matricula + ')'}"></dd>
+      <dt>Saída</dt><dd th:text="${#temporals.format(liberacao.dataHoraSaida,'dd/MM/yyyy HH:mm')}"></dd>
+      <dt>Motivo</dt><dd th:text="${liberacao.motivo.descricao}"></dd>
+      <dt>Justificativa</dt><dd th:text="${liberacao.justificativa}"></dd>
+      <dt>Comprovação</dt><dd th:text="${liberacao.comprovante}"></dd>
+      <dt>Autorizado por</dt><dd th:text="${liberacao.autorizadoPor.nome}"></dd>
+      <dt>Registrado em</dt><dd th:text="${#temporals.format(liberacao.dataHoraRegistro,'dd/MM/yyyy HH:mm')}"></dd>
+    </dl>
+    <div class="botoes sem-impressao">
+      <button type="button" onclick="window.print()">Imprimir</button>
+      <a th:href="@{/liberacoes}">Voltar</a>
+      <form th:if="${liberacao.status.name() == 'AUTORIZADA' and session.usuario.podeAutorizar}"
+            th:action="@{/liberacoes/cancelar/{id}(id=${liberacao.id})}" method="post"
+            onsubmit="return confirm('Cancelar esta liberação?')">
+        <button type="submit" class="perigo-btn">Cancelar liberação</button>
+      </form>
+    </div>
+  </div>
+</main>
+</body>
+</html>

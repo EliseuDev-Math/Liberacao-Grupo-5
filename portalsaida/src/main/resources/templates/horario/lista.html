@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Horários de aula')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main>
+  <div class="cabecalho">
+    <h1>Horários de aula</h1>
+    <a class="btn" th:if="${session.usuario.podeGerenciarCadastros}" th:href="@{/horarios/novo}">Novo horário</a>
+  </div>
+  <form class="filtro" method="get" th:action="@{/horarios}">
+    <select name="turmaId" onchange="this.form.submit()">
+      <option value="">Todas as turmas</option>
+      <option th:each="t : ${turmas}" th:value="${t.id}" th:text="${t.nome}" th:selected="${turmaId != null and turmaId == t.id}"></option>
+    </select>
+  </form>
+  <div class="tabela">
+    <table>
+      <tr><th>Turma</th><th>Dia</th><th>Início</th><th>Fim</th><th>Disciplina</th><th>Professor</th><th th:if="${session.usuario.podeGerenciarCadastros}">Ações</th></tr>
+      <tr th:each="h : ${horarios}">
+      <td th:text="${h.turma.nome}"></td>
+      <td th:text="${h.diaSemana.descricao}"></td>
+      <td th:text="${#temporals.format(h.horaInicio,'HH:mm')}"></td>
+      <td th:text="${#temporals.format(h.horaFim,'HH:mm')}"></td>
+      <td th:text="${h.disciplina}"></td>
+      <td th:text="${h.professor}"></td>
+      <td th:if="${session.usuario.podeGerenciarCadastros}" class="acoes">
+        <a th:href="@{/horarios/editar/{id}(id=${h.id})}">Editar</a>
+        <form th:action="@{/horarios/excluir/{id}(id=${h.id})}" method="post" onsubmit="return confirm('Confirma a exclusão?')">
+          <button type="submit" class="link perigo">Excluir</button>
+        </form>
+      </td>
+      </tr>
+      <tr th:if="${#lists.isEmpty(horarios)}"><td colspan="7">Nenhum registro encontrado.</td></tr>
+    </table>
+  </div>
+</main>
+</body>
+</html>
