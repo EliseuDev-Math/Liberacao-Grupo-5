@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Fragmentos reutilizados por todas as páginas (head e menu superior) -->
+<head th:fragment="head(titulo)">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${titulo} + ' · Portal Saída'">Portal Saída</title>
+  <link rel="stylesheet" th:href="@{/css/estilo.css}">
+</head>
+<body>
+<nav th:fragment="nav" class="topo" th:if="${session.usuario != null}">
+  <a class="marca" th:href="@{/}">Portal Saída</a>
+  <div class="links">
+    <a th:href="@{/liberacoes}">Liberações</a>
+    <a th:href="@{/horarios}">Horários</a>
+    <a th:href="@{/turmas}">Turmas</a>
+    <a th:href="@{/alunos}">Alunos</a>
+    <a th:href="@{/cursos}">Cursos</a>
+    <a th:if="${session.usuario.admin}" th:href="@{/departamentos}">Departamentos</a>
+    <a th:if="${session.usuario.admin}" th:href="@{/usuarios}">Usuários</a>
+  </div>
+  <div class="usuario">
+    <span th:text="${session.usuario.nome} + ' · ' + ${session.usuario.perfil.descricao}"></span>
+    <a th:href="@{/logout}">Sair</a>
+  </div>
+</nav>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Usuário')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main>
+  <h1 th:text="${usuario.id == null} ? 'Novo(a) usuário' : 'Editar usuário'"></h1>
+  <form class="card" th:action="@{/usuarios/salvar}" th:object="${usuario}" method="post">
+    <input type="hidden" th:field="*{id}" th:if="*{id != null}">
+    <div class="erro" th:if="${#fields.hasErrors('*')}"><p th:each="e : ${#fields.errors('*')}" th:text="${e}"></p></div>
+    <label>Nome</label>
+    <input type="text" th:field="*{nome}" >
+    <label>Login</label>
+    <input type="text" th:field="*{login}" >
+    <label>Senha <small>(ao editar, deixe em branco para manter)</small></label>
+    <input type="password" name="senha" autocomplete="new-password">
+    <label>Perfil</label>
+    <select th:field="*{perfil}"><option value="">Selecione</option><option th:each="o : ${perfis}" th:value="${o}" th:text="${o.descricao}"></option></select>
+    <label>Departamento</label>
+    <select th:field="*{departamentoId}"><option value="">(nenhum — somente administrador)</option><option th:each="o : ${departamentos}" th:value="${o.id}" th:text="${o.nome}"></option></select>
+    <label class="check"><input type="checkbox" th:field="*{ativo}"> Usuário ativo</label>
+    <div class="botoes"><button type="submit">Salvar</button><a th:href="@{/usuarios}">Cancelar</a></div>
+  </form>
+</main>
+</body>
+</html>

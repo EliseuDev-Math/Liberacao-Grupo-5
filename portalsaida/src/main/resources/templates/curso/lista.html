@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Cursos')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main>
+  <div class="cabecalho">
+    <h1>Cursos</h1>
+    <a class="btn" th:if="${session.usuario.podeGerenciarCadastros}" th:href="@{/cursos/novo}">Novo curso</a>
+  </div>
+  <div class="tabela">
+    <table>
+      <tr><th>Curso</th><th>Departamento</th><th th:if="${session.usuario.podeGerenciarCadastros}">Ações</th></tr>
+      <tr th:each="c : ${cursos}">
+      <td th:text="${c.nome}"></td>
+      <td th:text="${c.departamento.nome}"></td>
+      <td th:if="${session.usuario.podeGerenciarCadastros}" class="acoes">
+        <a th:href="@{/cursos/editar/{id}(id=${c.id})}">Editar</a>
+        <form th:action="@{/cursos/excluir/{id}(id=${c.id})}" method="post" onsubmit="return confirm('Confirma a exclusão?')">
+          <button type="submit" class="link perigo">Excluir</button>
+        </form>
+      </td>
+      </tr>
+      <tr th:if="${#lists.isEmpty(cursos)}"><td colspan="3">Nenhum registro encontrado.</td></tr>
+    </table>
+  </div>
+</main>
+</body>
+</html>

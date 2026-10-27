@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Curso')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main>
+  <h1 th:text="${curso.id == null} ? 'Novo(a) curso' : 'Editar curso'"></h1>
+  <form class="card" th:action="@{/cursos/salvar}" th:object="${curso}" method="post">
+    <input type="hidden" th:field="*{id}" th:if="*{id != null}">
+    <div class="erro" th:if="${#fields.hasErrors('*')}"><p th:each="e : ${#fields.errors('*')}" th:text="${e}"></p></div>
+    <label>Nome do curso</label>
+    <input type="text" th:field="*{nome}" >
+    <label>Departamento</label>
+    <select th:field="*{departamentoId}"><option value="">Selecione</option><option th:each="o : ${departamentos}" th:value="${o.id}" th:text="${o.nome}"></option></select>
+    <div class="botoes"><button type="submit">Salvar</button><a th:href="@{/cursos}">Cancelar</a></div>
+  </form>
+</main>
+</body>
+</html>

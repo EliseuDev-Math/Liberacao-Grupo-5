@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Início')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main>
+  <h1 th:text="'Olá, ' + ${session.usuario.nome}"></h1>
+  <p class="sub" th:text="${session.usuario.admin} ? 'Visão geral do campus' : ('Departamento: ' + ${session.usuario.departamentoNome})"></p>
+  <div class="cards">
+    <div class="card"><span class="num" th:text="${#lists.size(liberacoesHoje)}">0</span><span>Saídas autorizadas hoje</span></div>
+    <div class="card"><span class="num" th:text="${totalTurmas}">0</span><span>Turmas</span></div>
+    <div class="card"><span class="num" th:text="${totalAlunos}">0</span><span>Alunos</span></div>
+  </div>
+  <div class="cabecalho">
+    <h2>Saídas de hoje</h2>
+    <a class="btn" th:if="${session.usuario.podeAutorizar}" th:href="@{/liberacoes/nova}">Nova liberação</a>
+  </div>
+  <div class="tabela">
+    <table>
+      <tr><th>Horário</th><th>Turma</th><th>Quem sai</th><th>Motivo</th><th>Autorizado por</th><th></th></tr>
+      <tr th:each="l : ${liberacoesHoje}">
+        <td th:text="${#temporals.format(l.dataHoraSaida,'HH:mm')}"></td>
+        <td th:text="${l.turma.nome}"></td>
+        <td th:text="${l.aluno != null} ? ${l.aluno.nome} : 'Turma inteira'"></td>
+        <td th:text="${l.motivo.descricao}"></td>
+        <td th:text="${l.autorizadoPor.nome}"></td>
+        <td><a th:href="@{/liberacoes/{id}(id=${l.id})}">Ver</a></td>
+      </tr>
+      <tr th:if="${#lists.isEmpty(liberacoesHoje)}"><td colspan="6">Nenhuma saída autorizada para hoje.</td></tr>
+    </table>
+  </div>
+</main>
+</body>
+</html>
