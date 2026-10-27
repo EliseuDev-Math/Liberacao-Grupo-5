@@ -3,8 +3,8 @@
 ## 0. Como dividir o trabalho (Barema)
 | Integrante | Entrega principal | Onde mexer |
 |---|---|---|
-| **João** (Lead/Back) | Repositório, branches, revisão de PRs, regras de negócio, diagrama de classes | `service/`, `controller/`, `security/` |
-| **Eliseu** (Back/BD) | DER, modelo relacional, DDL, entidades/repositórios, carga de dados reais, MySQL | `model/`, `repository/`, `DataLoader`, `application*.properties` |
+| **Eliseu** (Lead/Back) | Repositório, branches, revisão de PRs, regras de negócio, diagrama de classes | `service/`, `controller/`, `security/` |
+| **João** (Back/BD) | DER, modelo relacional, DDL, entidades/repositórios, carga de dados reais, MySQL | `model/`, `repository/`, `DataLoader`, `application*.properties` |
 | **Artur** (Front) | Telas Thymeleaf, validações visíveis, CSS, usabilidade | `templates/`, `static/css` |
 | **Yasmin** (Docs) | Requisitos, entrevistas, casos de uso, preenchimento da Barema | `docs/` + Barema |
 | **Maria Clara** (Testes) | Plano de testes, JUnit, testes manuais, Issues de bugs | `src/test/`, plano de testes |
