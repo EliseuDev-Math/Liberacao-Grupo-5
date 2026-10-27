@@ -3,25 +3,19 @@
 ## 0. Como dividir o trabalho (Barema)
 | Integrante | Entrega principal | Onde mexer |
 |---|---|---|
-| **João** (Lead/Back) | Repositório, branches, revisão de PRs, regras de negócio, diagrama de classes | `service/`, `controller/`, `security/` |
-| **Eliseu** (Back/BD) | DER, modelo relacional, DDL, entidades/repositórios, carga de dados reais, MySQL | `model/`, `repository/`, `DataLoader`, `application*.properties` |
+| **Eliseu** (Lead/Back) | Repositório, branches, revisão de PRs, regras de negócio, diagrama de classes | `service/`, `controller/`, `security/` |
+| **João** (Back/BD) | DER, modelo relacional, DDL, entidades/repositórios, carga de dados reais, MySQL | `model/`, `repository/`, `DataLoader`, `application*.properties` |
 | **Artur** (Front) | Telas Thymeleaf, validações visíveis, CSS, usabilidade | `templates/`, `static/css` |
 | **Yasmin** (Docs) | Requisitos, entrevistas, casos de uso, preenchimento da Barema | `docs/` + Barema |
 | **Maria Clara** (Testes) | Plano de testes, JUnit, testes manuais, Issues de bugs | `src/test/`, plano de testes |
 
 ## 1. Fluxo Git (Barema 3.7)
-1. João cria o repo, sobe este projeto na `main` e cria `develop`. Adiciona todos como colaboradores.
+1. Eliseu cria o repo, sobe este projeto na `main` e cria `develop`. Adiciona todos como colaboradores.
 2. Cada tarefa = uma branch `feature/<nome>` saindo de `develop`; commits no padrão `feat:`, `fix:`, `docs:`, `test:`.
 3. Pull Request para `develop`, revisado por outra pessoa. Nada direto na `main`.
 4. Ao fim de cada checkpoint: PR `develop` → `main` com tag (`v0.1`, `v0.2`...).
 
-## 2. Roteiro por semana
-1. **Semana 1** – Todos: clonar, rodar, entrar com os 4 usuários, explorar. Yasmin: entrevistas. Eliseu: DER. João: diagrama de classes.
-2. **Semana 2** – Eliseu: substituir o `DataLoader` por dados reais (departamentos, cursos, turmas, horários do campus). Artur: ajustar identidade visual (logo, cores do IFMT).
-3. **Semana 3** – João/Eliseu: migrar para MySQL (perfil `mysql`). Maria Clara: rodar testes manuais por caso de uso e abrir Issues.
-4. **Semana 4** – Correções, regras extras (ver seção 6), documentação final e preenchimento da Barema com links de commits/PRs.
-
-## 3. Requisitos
+## 2. Requisitos
 **Funcionais**
 - RF01 Manter departamentos, cursos, turmas, alunos e usuários.
 - RF02 Manter horários de aula por turma e dia da semana (sem conflitos).
@@ -39,7 +33,7 @@
 - RNF04 Interface responsiva (celular e desktop).
 - RNF05 Arquitetura MVC em camadas (Controller → Service → Repository).
 
-## 4. Casos de uso (atores: Secretário, Coordenador, Administrador, Portaria*)
+## 3. Casos de uso (atores: Secretário, Coordenador, Administrador, Portaria*)
 UC01 Autenticar · UC02 Autorizar saída de turma · UC03 Autorizar saída de aluno · UC04 Cancelar liberação ·
 UC05 Consultar liberações · UC06 Gerenciar horários · UC07 Gerenciar turmas/alunos/cursos · UC08 Gerenciar departamentos e usuários.
 *Portaria hoje usa um login de secretário só para consultar; um perfil próprio é evolução (seção 6).
